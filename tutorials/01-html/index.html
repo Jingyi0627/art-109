@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<body style="background-color: #eae0cf;">
+
+</body>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +14,9 @@
 
 <body>
     <header>
-        <h1 draggable="true">HTML FOR US BY US</h1>
+        <h1 id="t" contenteditable>HTML FOR US BY US</h1>
+        <input type="color" oninput="t.style.color=this.value">
+
         <nav>
             <ul>
                 <li><a href="#cat">Cat</a></li>
@@ -23,62 +29,53 @@
             <img src="images/1.png" alt="Owls Cats and Dogs">
             <img src="images/1.png" alt="Owls Cats and Dogs">
         </div>
+        </p>
+        <label for="story">Would you like to share your moment:</label>
+
+        <textarea id="story" name="story" rows="5" cols="33">
+I met a little dog today...
+</textarea>
+
+
+        <figure role="img" aria-labelledby="dog-caption">
+            <pre>
+/ \__
+(   @\___
+/        O
+/ (_____/
+/ / 
+</pre>
+            <figcaption id="dog-caption">
+                The little dog
+            </figcaption>
+        </figure>
+
 
     </header>
     <main>
         <section id="cat">
             <h2>MEOW</h2>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto maxime deserunt molestiae ex? Autem,
-                distinctio incidunt eos quos iure sunt eveniet, veniam modi porro temporibus dignissimos ratione
-                repellendus nemo delectus.</p>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto maxime deserunt molestiae ex? Autem,
-                distinctio incidunt eos quos iure sunt eveniet, veniam modi porro temporibus dignissimos ratione
-                repellendus nemo delectus.</p>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto maxime deserunt molestiae ex? Autem,
-                distinctio incidunt eos quos iure sunt eveniet, veniam modi porro temporibus dignissimos ratione
-                repellendus nemo delectus.</p>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto maxime deserunt molestiae ex? Autem,
-                distinctio incidunt eos quos iure sunt eveniet, veniam modi porro temporibus dignissimos ratione
-                repellendus nemo delectus.</p>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto maxime deserunt molestiae ex? Autem,
-                distinctio incidunt eos quos iure sunt eveniet, veniam modi porro temporibus dignissimos ratione
-                repellendus nemo delectus.</p>
+            <p>The cat's furry body resembles a warm ball of yarn.</p>
+            <p>Its large eyes gleam like glass marbles./p>
+            <p>When it moves softly, its footsteps are utterly silent.</p>
+            <p>The cat loves curling up in the sunlight, purring like a tiny engine.</p>
+            <p>Occasionally, it playfully swats with its paws, as if playing hide-and-seek with the world.</p>
         </section>
         <section id="dog">
             <h2>WOOF</h2>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto maxime deserunt molestiae ex? Autem,
-                distinctio incidunt eos quos iure sunt eveniet, veniam modi porro temporibus dignissimos ratione
-                repellendus nemo delectus.</p>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto maxime deserunt molestiae ex? Autem,
-                distinctio incidunt eos quos iure sunt eveniet, veniam modi porro temporibus dignissimos ratione
-                repellendus nemo delectus.</p>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto maxime deserunt molestiae ex? Autem,
-                distinctio incidunt eos quos iure sunt eveniet, veniam modi porro temporibus dignissimos ratione
-                repellendus nemo delectus.</p>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto maxime deserunt molestiae ex? Autem,
-                distinctio incidunt eos quos iure sunt eveniet, veniam modi porro temporibus dignissimos ratione
-                repellendus nemo delectus.</p>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto maxime deserunt molestiae ex? Autem,
-                distinctio incidunt eos quos iure sunt eveniet, veniam modi porro temporibus dignissimos ratione
-                repellendus nemo delectus.</p>
+            <p>The dog scampered over, tail wagging, like a cheerful little breeze.</p>
+            <p>LIts round eyes sparkled with curiosity and innocence.</p>
+            <p>When it bounded about, its fluffy body moved with lightness and agility.</p>
+            <p>The dog loved to nudge you with their wet nose, offering friendly greetings.</p>
+            <p>It rolled in the sunshine, its joyful yaps ringing out like tiny bells.</p>
         </section>
         <section id="owl">
             <h2>HOO HOO</h2>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto maxime deserunt molestiae ex? Autem,
-                distinctio incidunt eos quos iure sunt eveniet, veniam modi porro temporibus dignissimos ratione
-                repellendus nemo delectus.</p>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto maxime deserunt molestiae ex? Autem,
-                distinctio incidunt eos quos iure sunt eveniet, veniam modi porro temporibus dignissimos ratione
-                repellendus nemo delectus.</p>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto maxime deserunt molestiae ex? Autem,
-                distinctio incidunt eos quos iure sunt eveniet, veniam modi porro temporibus dignissimos ratione
-                repellendus nemo delectus.</p>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto maxime deserunt molestiae ex? Autem,
-                distinctio incidunt eos quos iure sunt eveniet, veniam modi porro temporibus dignissimos ratione
-                repellendus nemo delectus.</p>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto maxime deserunt molestiae ex? Autem,
-                distinctio incidunt eos quos iure sunt eveniet, veniam modi porro temporibus dignissimos ratione
-                repellendus nemo delectus.</p>
+            <p>The owl glides silently through the night sky, its wings as quiet as the wind.</p>
+            <p>Its large eyes sparkle with the light of wisdom.</p>
+            <p>Owls love to perch on tall tree branches, observing everything around them.</p>
+            <p>Occasionally, it emits a soft “hoo-hoo” call, as if telling stories in the night.</p>
+            <p>The owl's feathers are soft and thick, keeping it warm and cozy through the cold nights.</p>
         </section>
     </main>
     <footer>...</footer>
