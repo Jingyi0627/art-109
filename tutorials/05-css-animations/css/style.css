@@ -93,8 +93,6 @@ body {
     border-radius: 10px;
     text-decoration: none;
     transition: all .5s;
-
-
 }
 
 
@@ -103,7 +101,6 @@ body {
     color: black;
     transform: scale(1.5);
 }
-
 
 
 
@@ -120,5 +117,37 @@ body {
 
     100% {
         width: 80vw;
+    }
+}
+
+.box {
+    width: 200px;
+    height: 100px;
+    background-color: rgb(87, 164, 228);
+    margin: 30px auto;
+    text-align: center;
+    line-height: 100px;
+    border-radius: 10px;
+
+
+    animation: moveAround 3s infinite alternate;
+}
+
+@keyframes moveAround {
+    0% {
+        transform: translateX(0) rotate(0deg);
+    }
+
+    30% {
+        transform: translateX(80px) rotate(30deg);
+    }
+
+
+    60% {
+        transform: translateX(80px) rotate(30deg);
+    }
+
+    100% {
+        transform: translateX(0) rotate(0deg);
     }
 }
