@@ -59,8 +59,26 @@ body {
 
 .square:hover {
 
-    background-color: rgb(48, 171, 241);
+    background-color: rgb(225, 118, 247);
     transform: rotate(30deg);
+}
+
+
+.square2 {
+    width: 80px;
+    height: 100px;
+    background-color: rgb(240, 214, 112);
+    margin: 50px auto;
+    text-align: center;
+
+    font-weight: bold;
+    border-radius: 10px;
+    transition: transform 0.5s, background-color 1.5s;
+}
+
+.square2:hover {
+    background-color: rgb(134, 199, 114);
+    transform: scale(1.5) rotate(30deg);
 }
 
 
@@ -87,9 +105,11 @@ body {
 }
 
 
+
+
 .loading {
     background-color: rgb(197, 105, 179);
-    animation: stretch 5s 3 normal;
+    animation: stretch 5s 10 normal;
     width: 80vw;
 }
 
