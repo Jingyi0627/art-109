@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+    background-color: #070606;
+    color: #ffffff;
+    font-family: 'Helvetica Neue', sans-serif;
+    display: block;
+    min-height: 100vh;
+}
+
+header,
+main,
+footer {
+    text-align: center;
+}
+
+h1 {
+    font-size: 2em;
+    letter-spacing: 0.05em;
+    margin: 16px 0 6px;
+}
+
+p {
+    font-size: 1em;
+    opacity: 0.8;
+    margin: 0 0 10px;
+}
+
+canvas {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    display: block;
+    margin: 15px auto 0;
+}
+
+.sketch-wrap {
+    width: 100%;
+    height: 100vh;
+}
+
+.responsive-image {
+    text-align: center;
+    padding: 20px 0 40px;
+}
+
+.responsive-image img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+.responsive-image figcaption {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin-top: 6px;
+}
