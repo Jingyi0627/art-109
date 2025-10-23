@@ -1,6 +1,5 @@
 /*
 COLOR PALETTE
-
 Dark green    #3c8453
 Sandy beige   #bcaa96
 Dark gray     #222222
@@ -8,28 +7,11 @@ Light gray    #d3d4d6
 Off-white     #f6f6f6
 */
 
-/* GLOBAL STYLES 
-------------------------------------*/
-/* 
-  https://www.paulirish.com/2012/box-sizing-border-box-ftw/
-*/
-html {
-    box-sizing: border-box;
-}
-
-*,
-*:before,
-*:after {
-    box-sizing: inherit;
-}
-
-/* 
-  https://www.paulirish.com/2012/box-sizing-border-box-ftw/
-*/
+/* GLOBAL STYLES ------------------------------------*/
 html {
     box-sizing: border-box;
     font-size: 62.5%;
-    /* set default to 10px */
+    /* default 10px */
 }
 
 *,
@@ -51,24 +33,26 @@ body {
     line-height: 1.4;
 }
 
+/* ========== NAVIGATION ========== */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: #b68c45;
-    /* Green background */
-    color: #fff;
+    background-color: #fae8cc;
+    /* same as page background */
+    color: #222;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
-/* Logo styling */
+/* Logo */
 .logo a {
-    color: #fff;
+    color: #222;
     text-decoration: none;
     font-size: 24px;
 }
 
-/* Navigation links styling */
+/* Navigation links */
 .nav-links {
     display: flex;
     list-style: none;
@@ -79,24 +63,23 @@ body {
 }
 
 .nav-links a {
-    color: #fff;
+    color: #222;
     text-decoration: none;
     font-size: 18px;
-    transition: color 0.3s, text-decoration 0.3s, background-color 0.3s;
     padding: 5px 10px;
+    transition: color 0.3s, text-decoration 0.3s;
 }
 
+/* Hover/Active */
 .nav-links a:hover,
 .nav-links a.active {
-    color: #e0e0e0;
-    /* Lighter color for active/hover */
-    background-color: #b68c45;
-    /* Darker green background on hover */
-    border-radius: 4px;
-    /* Optional: rounded corners */
+    color: #8f5616;
+    background-color: transparent;
+    text-decoration: underline;
+    border-radius: 0;
 }
 
-/* Menu toggle button for mobile view */
+/* Hamburger icon */
 .menu-toggle {
     display: none;
     flex-direction: column;
@@ -104,13 +87,13 @@ body {
 }
 
 .menu-toggle .bar {
-    background-color: #fff;
+    background-color: #222;
     height: 3px;
     width: 25px;
     margin: 5px;
 }
 
-/* Responsive styling */
+/* Responsive menu */
 @media (max-width: 768px) {
     .nav-links {
         display: none;
@@ -119,8 +102,8 @@ body {
         position: absolute;
         top: 60px;
         left: 0;
-        background-color: #b68c45;
-        /* Green background for mobile view */
+        background-color: #fae8cc;
+        /* unified color */
     }
 
     .nav-links.active {
@@ -137,27 +120,11 @@ body {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* ========== TYPOGRAPHY ========== */
 h1,
 h2,
 h3 {
-    font-family: 'Playfair Display',
-        serif;
+    font-family: 'Playfair Display', serif;
     font-weight: 400;
     margin: 0;
 }
@@ -175,9 +142,7 @@ h3 {
     font-size: 2.4rem;
 }
 
-
-
-/* links */
+/* Links */
 a {
     color: #3c8453;
 }
@@ -195,6 +160,7 @@ footer a:hover {
     color: #3c8453;
 }
 
+/* Button */
 .btn {
     background: #3c8453;
     color: #f6f6f6;
@@ -208,15 +174,14 @@ footer a:hover {
     border-radius: 4px;
 }
 
+/* Content wrapper */
 .content-wrapper {
     margin: 0 auto;
     padding: 30px;
     max-width: 900px;
 }
 
-
-/* HOME
-------------------------------------*/
+/* ========== HOME ========== */
 .home {
     background: url(../images/bg-home-office-studio.jpg) no-repeat;
     background-size: cover;
@@ -243,9 +208,7 @@ footer a:hover {
     }
 }
 
-
-/* RESUME
-------------------------------------*/
+/* ========== RESUME ========== */
 .resume header::before {
     background: url(../images/bg-home-office-studio.jpg) center;
     background-size: cover;
@@ -289,9 +252,7 @@ footer a:hover {
     }
 }
 
-
-/* Projects
-------------------------------------*/
+/* ========== PROJECTS ========== */
 .project-item {
     margin: 30px 0;
 }
@@ -330,9 +291,7 @@ footer a:hover {
     }
 }
 
-
-/* Work Experience
-------------------------------------*/
+/* ========== WORK EXPERIENCE ========== */
 .work-item {
     margin: 30px 0;
 }
@@ -353,9 +312,7 @@ footer a:hover {
     }
 }
 
-
-/* Education
-------------------------------------*/
+/* ========== EDUCATION ========== */
 .education-item {
     margin: 30px 0;
 }
@@ -364,10 +321,7 @@ footer a:hover {
     margin: 0;
 }
 
-
-
-/* FOOTER
-------------------------------------*/
+/* ========== FOOTER ========== */
 footer {
     background: #222;
     color: #d3d4d6;
@@ -404,10 +358,9 @@ footer {
         text-align: center;
         padding: 10px;
     }
-
 }
 
-
+/* ========== ANIMATED BOX ========== */
 .box {
     width: 200px;
     height: 10px;
@@ -416,8 +369,6 @@ footer {
     text-align: center;
     line-height: 100px;
     border-radius: 10px;
-
-
     animation: moveAround 3s infinite alternate;
 }
 
@@ -430,12 +381,33 @@ footer {
         transform: translateX(80px) rotate(30deg);
     }
 
-
     60% {
-        transform: translatex(80px) rotate(30deg);
+        transform: translateX(80px) rotate(30deg);
     }
 
     100% {
         transform: translateX(0) rotate(0deg);
     }
+}
+
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.lightbox:target {
+    display: flex;
 }
