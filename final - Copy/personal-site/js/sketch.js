@@ -30,18 +30,18 @@ function drawThing(_x, _y) {
 }
 
 
+
 function setup() {
     createCanvas(400, 400);
+    noStroke();
 }
 
 function draw() {
     background(220);
     for (let i = 0; i < 6; i++) {
-        strokeWeight(0);
-        fill(255 * (i / 5));
+        fill(random(150, 255), random(100, 200), random(150, 255), 200);
         ellipse(width / 2, height / 2, 300 - (i * 50), 300 - (i * 50));
     }
-
 }
 
 
