@@ -2,10 +2,9 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-// 本地模型（与你的 index.html 同目录）
+
 const MODEL_URL = './The_Final.glb';
 
-// ——— 状态提示（左上角） ———
 const statusEl = document.createElement('div');
 Object.assign(statusEl.style, {
     position: 'fixed', left: '10px', top: '10px', zIndex: 9999,
@@ -57,12 +56,12 @@ async function loadLocalModel() {
     } catch (e) {
         console.error('Model load failed:', e);
         statusEl.textContent = 'load failed: ' + (e?.message || e) + ' → showing placeholder';
-        // 放一个占位立方体，避免白屏
+
         const geo = new THREE.BoxGeometry(1, 1, 1);
         const mat = new THREE.MeshNormalMaterial();
         const cube = new THREE.Mesh(geo, mat);
         scene.add(cube);
-        // 居中取景
+
         frameBox(new THREE.Box3().setFromObject(cube), new THREE.Vector3());
         return false;
     }
@@ -76,7 +75,7 @@ function loadAndFrame(url) {
             (gltf) => {
                 const root = gltf.scene;
 
-                // 只收集网格，忽略相机/灯光/空物体
+
                 const model = new THREE.Group();
                 root.traverse((obj) => {
                     if (obj.isMesh) {
@@ -96,8 +95,7 @@ function loadAndFrame(url) {
                 const box = new THREE.Box3().setFromObject(model);
                 const center = box.getCenter(new THREE.Vector3());
 
-                // 可视化包围盒（调试用，确认范围正确）：
-                // scene.add(new THREE.Box3Helper(box, 0x00ff88));
+
 
                 frameBox(box, center);
                 resolve();
