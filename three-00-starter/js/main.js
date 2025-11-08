@@ -2,136 +2,79 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x111111); //background
 
-const MODEL_URL = './The_Final.glb';
+const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.set(2, 2, 4);
 
-const statusEl = document.createElement('div');
-Object.assign(statusEl.style, {
-    position: 'fixed', left: '10px', top: '10px', zIndex: 9999,
-    padding: '6px 8px', borderRadius: '6px',
-    font: '12px/1.4 monospace', color: '#ddd', background: 'rgba(0,0,0,.55)'
-});
-statusEl.textContent = 'booting…';
-document.body.appendChild(statusEl);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 
-let scene, camera, renderer, controls;
+// 
+const hemiLight = new THREE.HemisphereLight(0xffffff, 0x222222, 1.2);
+scene.add(hemiLight);
 
-init();
-loadLocalModel().then(ok => {
-    statusEl.textContent = ok ? 'loaded: The_Final.glb ✔' : 'fallback cube shown (model not loaded)';
-});
-animate();
+const dirLight = new THREE.DirectionalLight(0xffffff, 2);
+dirLight.position.set(5, 5, 5);
+scene.add(dirLight);
 
-function init() {
-    scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0e0f12);
+const controls = new OrbitControls(camera, renderer.domElement);
 
-    camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 2000);
-    camera.position.set(0, 0, 3);
+// reloading
+const loader = new GLTFLoader();
+let model; // scale
 
-    renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.0;
-    document.body.appendChild(renderer.domElement);
+loader.load('elephant_zun-36_6_a_b-150k-4096.gltf', (gltf) => {
+    model = gltf.scene;
+    scene.add(model);
 
-    const hemi = new THREE.HemisphereLight(0xffffff, 0x202020, 1.6);
-    const dir = new THREE.DirectionalLight(0xffffff, 1.4);
-    dir.position.set(5, 10, 7);
-    scene.add(hemi, dir);
-
-    controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-
-    window.addEventListener('resize', onResize);
-    statusEl.textContent = 'canvas ok, loading local GLB…';
-}
-
-async function loadLocalModel() {
-    try {
-        await loadAndFrame(MODEL_URL);
-        return true;
-    } catch (e) {
-        console.error('Model load failed:', e);
-        statusEl.textContent = 'load failed: ' + (e?.message || e) + ' → showing placeholder';
-
-        const geo = new THREE.BoxGeometry(1, 1, 1);
-        const mat = new THREE.MeshNormalMaterial();
-        const cube = new THREE.Mesh(geo, mat);
-        scene.add(cube);
-
-        frameBox(new THREE.Box3().setFromObject(cube), new THREE.Vector3());
-        return false;
-    }
-}
-
-function loadAndFrame(url) {
-    return new Promise((resolve, reject) => {
-        const loader = new GLTFLoader();
-        loader.load(
-            url,
-            (gltf) => {
-                const root = gltf.scene;
+    loader.load('elephant_zun-36_6_a_b-150k-4096.gltf', (gltf) => {
+        model = gltf.scene;
+        scene.add(model);
 
 
-                const model = new THREE.Group();
-                root.traverse((obj) => {
-                    if (obj.isMesh) {
-                        if (obj.material) obj.material.side = THREE.DoubleSide;
-                        if (obj.geometry && !obj.geometry.attributes.normal) obj.geometry.computeVertexNormals();
-                        model.add(obj);
-                    }
-                });
+        const box = new THREE.Box3().setFromObject(model);
+        const center = box.getCenter(new THREE.Vector3());
+        const size = box.getSize(new THREE.Vector3());
 
-                if (model.children.length === 0) {
-                    reject(new Error('No mesh found in GLB. Did you export cameras/lights only?'));
-                    return;
-                }
-
-                scene.add(model);
-
-                const box = new THREE.Box3().setFromObject(model);
-                const center = box.getCenter(new THREE.Vector3());
+        model.position.sub(center);
 
 
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = 1.5 / maxDim; // adjust
+        model.scale.setScalar(scale);
 
-                frameBox(box, center);
-                resolve();
-            },
-            (xhr) => {
-                const pct = ((xhr.loaded / (xhr.total || 1)) * 100).toFixed(0);
-                statusEl.textContent = `loading GLB ${pct}%`;
-            },
-            (err) => reject(err)
-        );
+
+        camera.position.set(0, size.y * scale * 1.5, maxDim * scale * 3);
+        camera.lookAt(0, 0, 0);
+
+    }, undefined, (error) => {
+        console.error('Model loading failed：', error);
     });
-}
 
-function frameBox(box, center, fit = 1.25) {
-    controls.target.copy(center);
-    const size = box.getSize(new THREE.Vector3());
-    const maxSize = Math.max(size.x, size.y, size.z) || 1;
-    const halfFov = THREE.MathUtils.degToRad(camera.fov * 0.5);
-    const distance = (maxSize * 0.5) / Math.tan(halfFov);
 
-    const dir = new THREE.Vector3(0.6, 0.4, 1).normalize();
-    camera.position.copy(center).addScaledVector(dir, distance * fit);
+}, undefined, (error) => {
+    console.error('Model loading failed：', error);
+});
 
-    camera.near = Math.max(0.01, distance / 100);
-    camera.far = Math.max(1000, distance * 100);
-    camera.updateProjectionMatrix();
-}
-
-function onResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-}
 
 function animate() {
     requestAnimationFrame(animate);
+
+
+    if (model) {
+        model.rotation.y += 0.003;
+    }
+
     controls.update();
     renderer.render(scene, camera);
 }
+animate();
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
