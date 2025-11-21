@@ -1,0 +1,67 @@
+<!-- create a creative personal webpage with hero section, colorful background and animated buttons -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Personal Webpage</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: white;
+            text-align: center;
+        }
+
+        .hero {
+            padding: 100px 20px;
+        }
+
+        .button {
+            background-color: #ff6f61;
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 20px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+
+        .button:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hero">
+        <h1>Welcome to My Creative Space</h1>
+        <p>Explore my projects and ideas!</p>
+        <a href="#projects" class="button">View Projects</a>
+        <a href="#contact" class="button">Contact Me</a>
+    </div>
+</body>
+
+</html>
+<footer>
+    <p>&copy; 2025 My Creative Space. All rights reserved.</p>
+</footer>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const buttons = document.querySelectorAll('.button');
+        buttons.forEach(button => {
+            button.addEventListener('click', function () {
+                alert('Button clicked: ' + this.textContent);
+            });
+        });
+    });
+</script>
+
+<link rel="stylesheet" href="style.css">
