@@ -3,39 +3,344 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Network Flow</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+    <title>Refresh Anxiety</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+        /* === Base layout === */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                sans-serif;
+            background: #0b0c10;
+            color: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            transition: background 0.5s ease, color 0.5s ease, filter 0.4s ease;
+        }
+
+        .frame {
+            max-width: 720px;
+            width: 100%;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem;
+            background: rgba(5, 5, 10, 0.85);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.04em;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .status {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .counter {
+            font-weight: 600;
+        }
+
+        .instructions {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .note {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-top: 1rem;
+        }
+
+        /* Fake notification chips */
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .chip {
+            font-size: 0.75rem;
+            padding: 0.35rem 0.7rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            white-space: nowrap;
+        }
+
+
+        .refresh-hint {
+            margin-top: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            padding: 0.45rem 0.9rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .refresh-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #1bea71;
+        }
+
+
+
+        /* Level 1 –  */
+        body.level-1 {
+            background: radial-gradient(circle at top, #202235, #05060a);
+        }
+
+        /* Level 2  */
+        body.level-2 {
+            background: radial-gradient(circle at top, #282647, #05060a);
+            filter: contrast(1.05) saturate(1.1);
+        }
+
+        /* Level 3 – */
+        body.level-3 {
+            background:
+                repeating-linear-gradient(0deg,
+                    rgba(255, 255, 255, 0.02) 0,
+                    rgba(255, 255, 255, 0.02) 1px,
+                    transparent 1px,
+                    transparent 2px),
+                radial-gradient(circle at top, #342753, #05060a);
+            animation: subtle-shake 0.25s infinite alternate;
+            filter: contrast(1.1) saturate(1.2);
+        }
+
+        /* Level 4 –  */
+        body.level-4 {
+            background:
+                repeating-linear-gradient(0deg,
+                    rgba(255, 255, 255, 0.03) 0,
+                    rgba(255, 255, 255, 0.03) 1px,
+                    transparent 1px,
+                    transparent 2px),
+                radial-gradient(circle at top, #4b233f, #050308);
+            animation: subtle-shake 0.18s infinite alternate;
+            filter: contrast(1.2) saturate(1.3) brightness(0.95);
+        }
+
+        /* Level 5+ – */
+        body.level-5 {
+            background:
+                repeating-linear-gradient(0deg,
+                    rgba(255, 255, 255, 0.05) 0,
+                    rgba(255, 255, 255, 0.05) 1px,
+                    transparent 1px,
+                    transparent 2px),
+                radial-gradient(circle at top, #701b28, #020106);
+            animation: subtle-shake 0.13s infinite alternate;
+            filter: contrast(1.3) saturate(1.5) brightness(0.9);
+        }
+
+        @keyframes subtle-shake {
+            from {
+                transform: translateY(-1px);
+            }
+
+            to {
+                transform: translateY(1px);
+            }
+        }
+
+        /*  glitch” */
+        .glitch {
+            position: relative;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            mix-blend-mode: screen;
+            pointer-events: none;
+        }
+
+        body.level-3 .glitch::before,
+        body.level-4 .glitch::before,
+        body.level-5 .glitch::before {
+            opacity: 0.35;
+            color: #ff3366;
+            transform: translate(1px, -1px);
+        }
+
+        body.level-4 .glitch::after,
+        body.level-5 .glitch::after {
+            opacity: 0.35;
+            color: #15b3e8;
+            transform: translate(-1px, 1px);
+        }
+    </style>
 </head>
 
 <body>
-    <header role="banner">
-        <h1>Network Flow</h1>
-        <p>People explore the flow and dissipation of emotions in the digital space by dragging the generated images of
-            kittens.</p>
-    </header>
+    <div class="frame">
+        <h1 class="glitch" id="title" data-text="Refreshing…">
+            Refreshing…
+        </h1>
 
-    <main role="main">
-        <section class="sketch-wrap" aria-label="interactive sketch">
-            <div id="sketch-holder"></div>
-        </section>
+        <p class="subtitle" id="subtitle">
+            A small experiment about digital anxiety, information overload, and the
+            urge to refresh.
+        </p>
 
-        <section class="responsive-image" aria-label="responsive image">
-            <h2>Fleeting Companions</h2>
-            <figure>
-                <img src="images copy/1.png" alt="abstract light flow" />
-                <figcaption>A small digital cat appears and drifts away — a gentle trace of online connection.
-                </figcaption>
-            </figure>
-        </section>
-    </main>
+        <p class="status">
+            Refresh count: <span class="counter" id="counter">0</span><br />
+            <span id="levelText"></span>
+        </p>
 
-    <footer role="contentinfo">
-        <small>Jingyi Wang</small>
-    </footer>
+        <p class="instructions" id="instructions">
+            Press your browser’s refresh button (or <strong>Ctrl/⌘ + R</strong>) to
+            “update” the page.
+        </p>
 
-    <script src="sketch.js"></script>
+        <div class="chips" id="chipContainer">
+            <!-- JS will inject fake notifications here -->
+        </div>
+
+        <div class="refresh-hint">
+            <span class="refresh-dot" id="refreshDot"></span>
+            <span id="refreshLabel">System status: stable</span>
+        </div>
+
+        <p class="note">
+            Your browser remembers how many times you've refreshed this page
+            (using <code>localStorage</code>). You can clear it any time from the dev tools.
+        </p>
+    </div>
+
+    <script>
+        // Get refresh count from localStorage
+        let count = parseInt(localStorage.getItem("refreshCount") || "0", 10);
+        count++;
+        localStorage.setItem("refreshCount", String(count));
+
+        const counterEl = document.getElementById("counter");
+        const levelTextEl = document.getElementById("levelText");
+        const titleEl = document.getElementById("title");
+        const subtitleEl = document.getElementById("subtitle");
+        const chipContainer = document.getElementById("chipContainer");
+        const refreshLabel = document.getElementById("refreshLabel");
+        const refreshDot = document.getElementById("refreshDot");
+
+        counterEl.textContent = count;
+
+        // Decide anxiety "level" based on count
+        let level = 1;
+        if (count >= 2 && count <= 3) level = 2;
+        if (count >= 4 && count <= 5) level = 3;
+        if (count >= 6 && count <= 7) level = 4;
+        if (count >= 8) level = 5;
+
+        document.body.classList.add("level-" + level);
+
+        // Text and fake notifications for each level
+        const levelMessages = {
+            1: "Everything looks mostly fine. You just wanted a small update.",
+            2: "More things appear on the screen. You feel a little less calm.",
+            3: "Notifications stack up. The interface starts to feel noisy.",
+            4: "The page feels crowded and tense. It's hard to focus.",
+            5: "The interface is overloaded. Refreshing doesn’t feel better anymore."
+        };
+
+        const chipMessages = {
+            1: ["1 new message", "Background sync complete"],
+            2: ["3 new alerts", "Update available", "News: trending topic"],
+            3: [
+                "9 unread notifications",
+                "System reminder x2",
+                "Breaking: urgent update"
+            ],
+            4: [
+                "24 pending updates",
+                "You might be missing something",
+                "Someone is typing…",
+                "Auto-refresh enabled"
+            ],
+            5: [
+                "99+ notifications",
+                "You are behind",
+                "Feed updating… again",
+                "Stay on this page",
+                "More updates in 0:03"
+            ]
+        };
+
+        levelTextEl.textContent = levelMessages[level];
+
+        // Inject chips
+        chipContainer.innerHTML = "";
+        chipMessages[level].forEach((text) => {
+            const chip = document.createElement("div");
+            chip.className = "chip";
+            chip.textContent = text;
+            chipContainer.appendChild(chip);
+        });
+
+        // Refresh status label
+        if (level === 1) {
+            refreshLabel.textContent = "System status: stable";
+            refreshDot.style.background = "#2ecc71";
+        } else if (level === 2 || level === 3) {
+            refreshLabel.textContent = "System status: updating…";
+            refreshDot.style.background = "#f1c40f";
+        } else {
+            refreshLabel.textContent = "System status: overloaded";
+            refreshDot.style.background = "#e74c3c";
+        }
+
+        // Title changes a bit with level
+        if (level >= 3) {
+            titleEl.textContent = "Still refreshing?";
+            titleEl.dataset.text = "Still refreshing?";
+        }
+        if (level >= 5) {
+            titleEl.textContent = "It never feels enough.";
+            titleEl.dataset.text = "It never feels enough.";
+            subtitleEl.textContent =
+                "You keep refreshing for relief, but the interface only becomes heavier.";
+        }
+
+        // Function to play sound
+        function playSound() {
+            const audio = new Audio('path/to/soft-soothing-deep-white-noise-378857.mp3'); // Replace with your sound file path
+            audio.play();
+        }
+
+        // Play sound on refresh
+        playSound();
+    </script>
 </body>
 
 </html>
