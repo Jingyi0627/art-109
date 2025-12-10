@@ -144,7 +144,7 @@
                 anxiety.
                 Sensitive users may find this uncomfortable.</p>
 
-            <p class="ai-note">
+            <!-- <p class="ai-note">
                 Note: Some code snippets were assisted by AI, but all code has been fully understood and modified by the
                 author.
             </p>
@@ -154,54 +154,55 @@
     </div>
 
     <!--  MAIN CONTENT -->
-    <h1>Refreshing…</h1>
-    <p id="statusText">A small experiment about digital anxiety and information overload.</p>
-    <p>Refresh count: <span id="counter">0</span></p>
+            <h1>Refreshing…</h1>
+            <p id="statusText">A small experiment about digital anxiety and information overload.</p>
+            <p>Refresh count: <span id="counter">0</span></p>
 
-    <p class="note">⚠️ Please use with caution. Some visual changes may make sensitive users feel uncomfortable.</p>
+            <p class="note">⚠️ Please use with caution. Some visual changes may make sensitive users feel uncomfortable.
+            </p>
 
 
-    <script>
-        const modal = document.getElementById("modalBackdrop");
-        const startBtn = document.getElementById("startBtn");
+            <script>
+                const modal = document.getElementById("modalBackdrop");
+                const startBtn = document.getElementById("startBtn");
 
-        // approve
-        startBtn.addEventListener("click", () => {
-            localStorage.setItem("modalAccepted", "true");
-            modal.style.display = "none";
-            initRefresh();
-        });
+                // approve
+                startBtn.addEventListener("click", () => {
+                    localStorage.setItem("modalAccepted", "true");
+                    modal.style.display = "none";
+                    initRefresh();
+                });
 
-        // check
-        const accepted = localStorage.getItem("modalAccepted");
+                // check
+                const accepted = localStorage.getItem("modalAccepted");
 
-        if (accepted === "true") {
-            // refresh
-            modal.style.display = "none";
-            initRefresh();
-        }
+                if (accepted === "true") {
+                    // refresh
+                    modal.style.display = "none";
+                    initRefresh();
+                }
 
-        function initRefresh() {
-            let count = parseInt(localStorage.getItem("refreshCount") || "0", 10);
-            count++;
-            localStorage.setItem("refreshCount", count);
-            document.getElementById("counter").textContent = count;
+                function initRefresh() {
+                    let count = parseInt(localStorage.getItem("refreshCount") || "0", 10);
+                    count++;
+                    localStorage.setItem("refreshCount", count);
+                    document.getElementById("counter").textContent = count;
 
-            // 1–5 levels
-            let level = ((count - 1) % 5) + 1;
-            document.body.classList.add("level-" + level);
+                    // 1–5 levels
+                    let level = ((count - 1) % 5) + 1;
+                    document.body.classList.add("level-" + level);
 
-            const messages = {
-                1: "It seems there are many new discoveries. You just want a small update.",
-                2: "There's too much information to handle. Let's get started right away.",
-                3: "You still have a bunch of tasks left unfinished.",
-                4: "You can no longer concentrate.",
-                5: "Information overload, information overload."
-            };
+                    const messages = {
+                        1: "It seems there are many new discoveries. You just want a small update.",
+                        2: "There's too much information to handle. Let's get started right away.",
+                        3: "You still have a bunch of tasks left unfinished.",
+                        4: "You can no longer concentrate.",
+                        5: "Information overload, information overload."
+                    };
 
-            document.getElementById("statusText").textContent = messages[level];
-        }
-    </script>
+                    document.getElementById("statusText").textContent = messages[level];
+                }
+            </script>
 
 </body>
 
