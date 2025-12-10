@@ -3,82 +3,144 @@
 
 <head>
   <meta charset="UTF-8">
+  <title>Refresh Anxiety</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jingyi Wang, A Digital Media Artisit</title>
-  <meta name="description" content="Jingyi Wang, A Digital Media Artisit">
-  <meta name="keywords" content="Jingyi Wang, A Digital Media Artisit">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Open+Sans&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background-color: #0b0c10;
+      color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+      text-align: center;
+      transition: background-color 0.5s, color 0.5s;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      margin: 0.5rem 0;
+    }
+
+    .note {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-top: 1rem;
+    }
+
+    .ai-note {
+      font-size: 0.75rem;
+      opacity: 0.6;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+    /* 背景颜色和震动表示焦虑等级 */
+    body.level-1 {
+      background-color: #0e226e;
+      color: #f5f5f5;
+    }
+
+    body.level-2 {
+      background-color: #0a8252;
+      color: #e5e5e5;
+      animation: shake 0.2s ease-in-out;
+    }
+
+    body.level-3 {
+      background-color: #eacc20;
+      color: #f0f0f0;
+      animation: shake 0.3s ease-in-out;
+    }
+
+    body.level-4 {
+      background-color: #e18d0e;
+      color: #f0dcdc;
+      animation: shake 0.4s ease-in-out;
+    }
+
+    body.level-5 {
+      background-color: #ba152e;
+      color: #ffdcdc;
+      animation: shake 0.5s ease-in-out;
+    }
+
+    @keyframes shake {
+      0% {
+        transform: translate(0px, 0px);
+      }
+
+      25% {
+        transform: translate(-3px, 2px);
+      }
+
+      50% {
+        transform: translate(3px, -2px);
+      }
+
+      75% {
+        transform: translate(-2px, 1px);
+      }
+
+      100% {
+        transform: translate(0px, 0px);
+      }
+    }
+  </style>
 </head>
 
-<body class="home">
+<body>
+  <h1>Refreshing…</h1>
+  <p id="statusText">A small experiment about digital anxiety and information overload.</p>
+  <p>Refresh count: <span id="counter">0</span></p>
 
-  <!-- //  Nav // -->
+  <p class="note">
+    ⚠️ Some visual changes may be uncomfortable for sensitive users (flashes or color changes). Use with caution.
+  </p>
 
-  <nav class="navbar">
-    <div class="logo">
-      <a href="#">Jingyi Wang</a>
-    </div>
-    <ul class="nav-links">
-      <li><a href="#" class="active">Home</a></li>
-      <li><a href="project.html">Projects</a></li>
-      <li><a href="resume.html">Resume</a></li>
-    </ul>
-    <div class="menu-toggle">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
-    </div>
-  </nav>
+  <p class="ai-note">
+    Note: AI assisted in code snippets for setup, but all code has been fully understood and modified by the author.
+  </p>
 
-  <!-- //  INTRO  // -->
-  <div class="content-wrapper">
-    <div class="content-bg">
-      <header>
-        <!-- Start content edits below this line. -->
-        <h1>Jingyi Wang</h1>
-        <h2>A Digital Media Artisit
+  <script>
+    // 获取并更新刷新次数
+    let count = parseInt(localStorage.getItem('refreshCount') || '0', 10);
+    count++;
+    localStorage.setItem('refreshCount', count.toString());
 
-          <!-- End content edits here. -->
-      </header>
+    const counterEl = document.getElementById('counter');
+    const statusTextEl = document.getElementById('statusText');
+    counterEl.textContent = count;
 
-      <!-- //  ABOUT ME  // -->
-      <main>
-        <p>I explore natural elements and use them as symbols of emotions and memories.
-          Through the flow of light, shadow, and time, I hope my works can express the tension and transformation of the
-          inner
-          world—revealing the feelings that often go unnoticed in daily life.
-          I am drawn to the traces that emotions leave in our memories, and how they resurface through sensory
-          experience.
-          By creating variations and contrasts within my works, I invite the audience into an immersive state, where
-          hidden
-          emotions and fragmented memories emerge through the layers of light and shadow.
-        </p>
+    // 根据刷新次数设定等级
+    let level = 1;
+    if (count >= 2 && count <= 3) level = 2;
+    if (count >= 4 && count <= 5) level = 3;
+    if (count >= 6 && count <= 7) level = 4;
+    if (count >= 8) level = 5;
 
-        <p>To learn more about my artworks, check out my <a href="resume.html"> resume</a>. Thanks for stopping by!
-        </p>
+    // 清除已有等级 class
+    document.body.classList.remove('level-1', 'level-2', 'level-3', 'level-4', 'level-5');
+    document.body.classList.add('level-' + level);
 
+    // 等级对应文字
+    const messages = {
+      1: "Everything looks mostly fine. You just wanted a small update.",
+      2: "More things appear on the screen. You feel a little less calm.",
+      3: "Notifications start stacking up. The interface feels noisy.",
+      4: "The page feels crowded and tense. Hard to focus.",
+      5: "Overloaded interface. Refreshing doesn’t help anymore."
+    };
 
-      </main>
-    </div>
-  </div>
-  <!-- //  FOOTER INFO, SOCIAL MEDIA  // -->
-  <footer>
-    <p>© 2025 by Jingyi Wang | <a href="mailto:email@example.com">Jingyi.wang01@sjsu.edu</a></p>
-
-    <ul class="socials">
-      <li>
-      </li>
-      <li>
-
-      </li>
-    </ul>
-  </footer>
-
-  <script src="js/main.js"></script>
-
+    statusTextEl.textContent = messages[level];
+  </script>
 </body>
 
 </html>
