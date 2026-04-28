@@ -26,7 +26,7 @@ body {
 }
 
 body {
-    background: #fae8cc;
+    background: #92a4c9;
     margin: 0;
     font-family: 'Open Sans', sans-serif;
     font-size: 1.5rem;
@@ -39,7 +39,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: #fae8cc;
+    background-color: #a9b9ea;
     /* same as page background */
     color: #222;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
@@ -102,7 +102,7 @@ body {
         position: absolute;
         top: 60px;
         left: 0;
-        background-color: #fae8cc;
+        background-color: #a0b8d5;
         /* unified color */
     }
 
@@ -183,7 +183,7 @@ footer a:hover {
 
 /* ========== HOME ========== */
 .home {
-    background: url(../images/bg-home-office-studio.jpg) no-repeat;
+    background: url(1.png) no-repeat;
     background-size: cover;
     display: flex;
     flex-direction: column;
